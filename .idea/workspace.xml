@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89941dac-debe-4014-b0f2-8c1fd4ba80fa" name="Changes" comment="" />
+    <list default="true" id="89941dac-debe-4014-b0f2-8c1fd4ba80fa" name="Changes" comment="nerd" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,11 +63,37 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1758610978508</updated>
-      <workItem from="1758610981567" duration="347000" />
+      <workItem from="1758610981567" duration="649000" />
     </task>
+    <task id="LOCAL−00001" summary="nerd">
+      <option name="closed" value="true" />
+      <created>1758611466092</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1758611466092</updated>
+    </task>
+    <task id="LOCAL−00002" summary="nerd">
+      <option name="closed" value="true" />
+      <created>1758611522898</created>
+      <option name="number" value="LOCAL−00002" />
+      <option name="presentableId" value="LOCAL−00002" />
+      <updated>1758611522898</updated>
+    </task>
+    <task id="LOCAL−00003" summary="nerd">
+      <option name="closed" value="true" />
+      <created>1758611628138</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1758611628138</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="nerd" />
+    <option name="LAST_COMMIT_MESSAGE" value="nerd" />
   </component>
 </project>
