@@ -1,0 +1,213 @@
+<?php
+session_start();
+require_once 'config.php';
+
+// Check if user is logged in and is a profesor
+if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'profesor') {
+    header("Location: index.php");
+    exit();
+}
+
+// Handle grade deletion
+if (isset($_POST['delete_grade'])) {
+    $grade_id = (int)$_POST['grade_id'];
+    $delete_sql = "DELETE FROM grades WHERE id = $grade_id";
+    if ($conn->query($delete_sql)) {
+        $success_message = "Ocena je bila uspešno izbrisana!";
+    } else {
+        $error_message = "Napaka pri brisanju ocene: " . $conn->error;
+    }
+}
+
+// Handle grade submission
+if (isset($_POST['submit_grade'])) {
+    $student_email = $conn->real_escape_string($_POST['student_email']);
+    $subject = $conn->real_escape_string($_POST['subject']);
+    $grade = (int)$_POST['grade'];
+    $date = $conn->real_escape_string($_POST['date']);
+
+    $sql = "INSERT INTO grades (student_email, subject, grade, date) VALUES ('$student_email', '$subject', $grade, '$date')";
+    
+    if ($conn->query($sql)) {
+        $success_message = "Ocena je bila uspešno dodana!";
+    } else {
+        $error_message = "Napaka pri dodajanju ocene: " . $conn->error;
+    }
+}
+
+// Get list of students
+$students_query = "SELECT email, name FROM users WHERE role = 'ucenec'";
+$students_result = $conn->query($students_query);
+?>
+
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profesor page</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .grade-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .form-group select, 
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .grades-table th {
+            background: #7494ec;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .grades-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body style="background: #f5f7fb;">
+    <div class="box">
+        <h1>Welcome, <span><?= htmlspecialchars($_SESSION['name']); ?></span></h1>
+        
+        <div class="grade-form">
+            <h2>Dodaj novo oceno</h2>
+            
+            <?php if (isset($success_message)): ?>
+                <div class="success-message"><?= $success_message ?></div>
+            <?php endif; ?>
+            
+            <?php if (isset($error_message)): ?>
+                <div class="error-message"><?= $error_message ?></div>
+            <?php endif; ?>
+
+            <form method="POST">
+                <div class="form-group">
+                    <label>Izberi učenca:</label>
+                    <select name="student_email" required>
+                        <option value="">Izberi učenca</option>
+                        <?php while($student = $students_result->fetch_assoc()): ?>
+                            <option value="<?= htmlspecialchars($student['email']) ?>">
+                                <?= htmlspecialchars($student['name']) ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Predmet:</label>
+                    <select name="subject" required>
+                        <option value="">Izberi predmet</option>
+                        <option value="Matematika">Matematika</option>
+                        <option value="Slovenščina">Slovenščina</option>
+                        <option value="Angleščina">Angleščina</option>
+                        <option value="Fizika">Fizika</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Ocena:</label>
+                    <select name="grade" required>
+                        <option value="">Izberi oceno</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Datum:</label>
+                    <input type="date" name="date" required value="<?= date('Y-m-d') ?>">
+                </div>
+
+                <button type="submit" name="submit_grade">Dodaj oceno</button>
+            </form>
+        </div>
+
+        <!-- Display recently added grades -->
+        <?php
+        $grades_query = "SELECT g.*, u.name as student_name 
+                        FROM grades g 
+                        JOIN users u ON g.student_email = u.email 
+                        ORDER BY g.date DESC 
+                        LIMIT 10";
+        $grades_result = $conn->query($grades_query);
+        
+        if ($grades_result && $grades_result->num_rows > 0):
+        ?>
+        <div style="max-width: 800px; margin: 20px auto;">
+            <h3>Zadnje dodane ocene</h3>
+            <table class="grades-table">
+                <thead>
+                    <tr>
+                        <th>Učenec</th>
+                        <th>Predmet</th>
+                        <th>Ocena</th>
+                        <th>Datum</th>
+                        <th>Akcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while($grade = $grades_result->fetch_assoc()): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($grade['student_name']) ?></td>
+                            <td><?= htmlspecialchars($grade['subject']) ?></td>
+                            <td><?= htmlspecialchars($grade['grade']) ?></td>
+                            <td><?= htmlspecialchars($grade['date']) ?></td>
+                            <td>
+                                <form method="POST" style="display: inline;" onsubmit="return confirm('Ali ste prepričani, da želite izbrisati to oceno?');">
+                                    <input type="hidden" name="grade_id" value="<?= $grade['id'] ?>">
+                                    <button type="submit" name="delete_grade" style="background: #dc3545; padding: 5px 10px; font-size: 12px;">Izbriši</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php endif; ?>
+
+        <button onclick="window.location.href='logout.php'" style="margin: 20px auto; display: block;">Odjava</button>
+    </div>
+</body>
+</html>
