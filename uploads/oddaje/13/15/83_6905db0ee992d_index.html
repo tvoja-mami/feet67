@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="sl">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Student Home — Grades & Missing Hours</title>
+		<link rel="stylesheet" href="assets/styles.css">
+	</head>
+	<body>
+		<div class="container">
+			<aside>
+			<div class="brand">Evi Šola</div>
+			<div class="subtitle">Nadzorna plošča učenca</div>
+				<nav aria-label="Main navigation">
+					  <button id="nav-grades" class="active" onclick="show('grades')">Ocene</button>
+					  <button id="nav-missing" onclick="show('missing')">Izostali urni</button>
+					  <button id="nav-schedule" onclick="show('schedule')">Urnik</button>
+					  <button id="nav-profile" onclick="show('profile')">Profil</button>
+				</nav>
+
+						<div style="margin-top:18px">
+							<div class="muted">Dodatno</div>
+							<div style="margin-top:8px" class="flex"><button class="chip">Razgovor z učiteljem</button></div>
+						</div>
+			</aside>
+
+			<main>
+				<div id="view-grades" class="view">
+					  <h1>Ocene <span class="muted">(1. obdobje — 2025)</span></h1>
+					<div class="card">
+						<table>
+							<thead>
+								<tr><th>Predmet</th><th>Ocena</th><th>Učitelj</th><th>Opombe</th></tr>
+							</thead>
+							<tbody>
+								<tr><td>Matematika</td><td><strong>9.3</strong></td><td>Gospa Alvarez</td><td class="muted">Odlično razmišljanje</td></tr>
+								<tr><td>Angleščina</td><td><strong>8.6</strong></td><td>Gospod Brown</td><td class="muted">Aktivno sodelovanje</td></tr>
+								<tr><td>Fizika</td><td><strong>7.9</strong></td><td>Dr. Singh</td><td class="muted">Manjkajoča laboratorijska naloga</td></tr>
+								<tr><td>Družba</td><td><strong>8.0</strong></td><td>Gospa Gomez</td><td class="muted">Dosledno</td></tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="card">
+						<h3>Povzetek uspešnosti</h3>
+						<p class="muted">Povprečje: <strong>8.45</strong> • Predmeti: <strong>4</strong></p>
+					</div>
+				</div>
+
+				<div id="view-missing" class="view" style="display:none">
+					<h1>Izostali ur</h1>
+					<div class="card">
+						<p class="muted">Prikazani so manjki in število ur. Skupne vrednosti spodaj so primerne podatke za učenca.</p>
+						<table>
+							<thead>
+								<tr><th>Datum</th><th>Predmet</th><th>Izostale ure</th><th>Razlog</th></tr>
+							</thead>
+							<tbody>
+								<tr><td>2025-09-08</td><td>Matematika</td><td>2.0</td><td>Zdravstveni</td></tr>
+								<tr><td>2025-08-21</td><td>Fizika</td><td>1.5</td><td>Zamuda</td></tr>
+								<tr><td>2025-07-14</td><td>Kemija</td><td>3.0</td><td>Družina</td></tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="card">
+						<h3>Povzetek</h3>
+						<p class="muted">Skupaj izostalih ur: <strong>6.5</strong></p>
+						<p class="muted">Dovoljen saldo izostankov: <strong>10</strong> ur</p>
+					</div>
+				</div>
+
+				<div id="view-schedule" class="view" style="display:none">
+					<h1>Urnik</h1>
+					<div class="card muted">Predogled urnika — integrirajte koledar ali razpored, ko bo potrebno.</div>
+				</div>
+
+				<div id="view-profile" class="view" style="display:none">
+					<h1>Profil</h1>
+					<div class="card">
+						<p><strong>Ime:</strong> Žan Krofl</p>
+						<p class="muted">Razred: R4B • ID učenca: 2025-001</p>
+					</div>
+				</div>
+
+				<footer></footer> 
+			</main>
+		</div>
+
+		<script>
+			function show(name){
+				const views=['grades','missing','schedule','profile'];
+				views.forEach(v=>{
+					const btn = document.getElementById('nav-'+v);
+					if(btn) btn.classList.toggle('active', v===name);
+					const el = document.getElementById('view-'+v);
+					if(el) el.style.display = (v===name)?'block':'none';
+				});
+				// scroll to top of main on mobile
+				window.scrollTo({top:0,behavior:'smooth'});
+			}
+		</script>
+	</body>
+</html>

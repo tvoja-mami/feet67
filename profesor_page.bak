@@ -25,7 +25,7 @@ if (isset($_POST['submit_grade'])) {
     $predmet_id = (int)$_POST['predmet_id'];
     $ocena = (int)$_POST['ocena'];
 
-    $sql = "INSERT INTO oddaje (id_ucenec, id_naloga, ocena, oddano_ob) VALUES ($ucenec_id, $predmet_id, $ocena, NOW())";
+    $sql = "INSERT INTO grades (student_email, subject, grade, date) VALUES ('$student_email', '$subject', $grade, '$date')";
     
     if ($conn->query($sql)) {
         $success_message = "Ocena je bila uspešno dodana!";
@@ -35,19 +35,8 @@ if (isset($_POST['submit_grade'])) {
 }
 
 // Get list of students
-$students_query = "SELECT id, ime, priimek FROM uporabniki WHERE vloga = 'ucenec'";
+$students_query = "SELECT email, ime FROM uporabniki WHERE vloga = 'ucenec'";
 $students_result = $conn->query($students_query);
-
-// Get list of assignments for this teacher
-$id_ucitelj = $_SESSION['user_id'];
-$naloge_query = "
-    SELECT n.*, p.ime as ime_predmeta
-    FROM naloge n
-    JOIN predmeti p ON n.id_predmet = p.id
-    JOIN ucitelji_predmeti up ON p.id = up.id_predmet
-    WHERE up.id_ucitelj = $id_ucitelj
-    ORDER BY p.ime, n.naslov";
-$naloge_result = $conn->query($naloge_query);
 ?>
 
 <!DOCTYPE html>
@@ -132,31 +121,30 @@ $naloge_result = $conn->query($naloge_query);
             <form method="POST">
                 <div class="form-group">
                     <label>Izberi učenca:</label>
-                    <select name="ucenec_id" required>
+                    <select name="student_email" required>
                         <option value="">Izberi učenca</option>
                         <?php while($student = $students_result->fetch_assoc()): ?>
-                            <option value="<?= htmlspecialchars($student['id']) ?>">
-                                <?= htmlspecialchars($student['ime'] . ' ' . $student['priimek']) ?>
+                            <option value="<?= htmlspecialchars($student['email']) ?>">
+                                <?= htmlspecialchars($student['name']) ?>
                             </option>
                         <?php endwhile; ?>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label>Naloga:</label>
-                    <select name="predmet_id" required>
-                        <option value="">Izberi nalogo</option>
-                        <?php while($naloga = $naloge_result->fetch_assoc()): ?>
-                            <option value="<?= htmlspecialchars($naloga['id']) ?>">
-                                <?= htmlspecialchars($naloga['ime_predmeta'] . ' - ' . $naloga['naslov']) ?>
-                            </option>
-                        <?php endwhile; ?>
+                    <label>Predmet:</label>
+                    <select name="subject" required>
+                        <option value="">Izberi predmet</option>
+                        <option value="Matematika">Matematika</option>
+                        <option value="Slovenščina">Slovenščina</option>
+                        <option value="Angleščina">Angleščina</option>
+                        <option value="Fizika">Fizika</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label>Ocena:</label>
-                    <select name="ocena" required>
+                    <select name="grade" required>
                         <option value="">Izberi oceno</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -203,10 +191,10 @@ $naloge_result = $conn->query($naloge_query);
                 <tbody>
                     <?php while($grade = $grades_result->fetch_assoc()): ?>
                         <tr>
-                            <td><?= htmlspecialchars($grade['ime'] . ' ' . $grade['priimek']) ?></td>
-                            <td><?= htmlspecialchars($grade['naslov_naloge']) ?></td>
-                            <td><?= htmlspecialchars($grade['ocena']) ?></td>
-                            <td><?= htmlspecialchars(date('d.m.Y', strtotime($grade['oddano_ob']))) ?></td>
+                            <td><?= htmlspecialchars($grade['student_name']) ?></td>
+                            <td><?= htmlspecialchars($grade['subject']) ?></td>
+                            <td><?= htmlspecialchars($grade['grade']) ?></td>
+                            <td><?= htmlspecialchars($grade['date']) ?></td>
                             <td>
                                 <form method="POST" style="display: inline;" onsubmit="return confirm('Ali ste prepričani, da želite izbrisati to oceno?');">
                                     <input type="hidden" name="grade_id" value="<?= $grade['id'] ?>">
