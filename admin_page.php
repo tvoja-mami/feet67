@@ -16,6 +16,30 @@ $stats = [
     'assignments' => $conn->query("SELECT COUNT(*) as count FROM naloge")->fetch_assoc()['count']
 ];
 
+// Handle subject deletion
+if (isset($_POST['delete_subject'])) {
+    $subject_id = (int)$_POST['subject_id'];
+    
+    // First check if there are any dependencies
+    $check_materials = $conn->query("SELECT COUNT(*) as count FROM gradiva WHERE id_predmet = $subject_id")->fetch_assoc()['count'];
+    $check_assignments = $conn->query("SELECT COUNT(*) as count FROM naloge WHERE id_predmet = $subject_id")->fetch_assoc()['count'];
+    
+    if ($check_materials > 0 || $check_assignments > 0) {
+        $error_message = "Predmeta ni mogoče izbrisati, ker vsebuje gradiva ali naloge. Najprej izbrišite vsa gradiva in naloge.";
+    } else {
+        // Delete from ucitelji_predmeti and ucenci_predmeti first (due to foreign key constraints)
+        $conn->query("DELETE FROM ucitelji_predmeti WHERE id_predmet = $subject_id");
+        $conn->query("DELETE FROM ucenci_predmeti WHERE id_predmet = $subject_id");
+        
+        // Then delete the subject
+        if ($conn->query("DELETE FROM predmeti WHERE id = $subject_id")) {
+            $success_message = "Predmet je bil uspešno izbrisan.";
+        } else {
+            $error_message = "Napaka pri brisanju predmeta: " . $conn->error;
+        }
+    }
+}
+
 // Handle subject creation
 if (isset($_POST['add_subject'])) {
     $subject_name = $conn->real_escape_string($_POST['subject_name']);
@@ -129,116 +153,9 @@ $student_result = $conn->query($student_query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administratorska nadzorna plošča</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .subject-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 3px;
-            margin-bottom: 5px;
-        }
-        .subject-tag {
-            background: #e9ecef;
-            padding: 2px 6px;
-            border-radius: 3px;
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            font-size: 0.85em;
-        }
-        .remove-subject {
-            background: none;
-            border: none;
-            color: #dc3545;
-            cursor: pointer;
-            padding: 0 2px;
-            font-size: 14px;
-            line-height: 1;
-        }
-        .remove-subject:hover {
-            color: #bd2130;
-        }
-        .add-subject {
-            margin-top: 3px;
-        }
-        .add-subject select {
-            padding: 2px 4px;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            margin-right: 3px;
-            font-size: 0.9em;
-        }
-        .add-subject button {
-            padding: 2px 6px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-        .add-subject button:hover {
-            background: #218838;
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .stat-card h3 {
-            margin: 0 0 10px 0;
-            color: #666;
-        }
-        .stat-card .number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #7494ec;
-        }
-        .users-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .users-table th,
-        .users-table td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-            font-size: 0.95em;
-            line-height: 1.3;
-        }
-        .users-table th {
-            background: #f8f9fa;
-            font-weight: 600;
-            padding: 8px;
-        }
-        .users-table tr:hover {
-            background-color: #f8f9fa;
-        }
-        .delete-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-        .delete-btn:hover {
-            background: #c82333;
-        }
-    </style>
+
 </head>
-<body style="background: #f5f7fb;">
+<body>
     <div class="box">
         <h1>Administratorska nadzorna plošča</h1>
         
@@ -273,14 +190,15 @@ $student_result = $conn->query($student_query);
         </div>
 
         <!-- Subject Dashboard -->
-        <div class="add-user-section" style="max-width: 1000px; margin: 30px auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-            <h2 style="margin-top: 0; color: #333; margin-bottom: 20px;">Pregled predmetov</h2>
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <div class="subjects-section">
+            <h2 class="section-header">Pregled predmetov</h2>
+            <table class="admin-table">
                 <thead>
                     <tr>
-                        <th style="text-align: left; padding: 12px; border-bottom: 2px solid #ddd;">Ime predmeta</th>
-                        <th style="text-align: left; padding: 12px; border-bottom: 2px solid #ddd;">Opis</th>
-                        <th style="text-align: left; padding: 12px; border-bottom: 2px solid #ddd;">Koda za vpis</th>
+                        <th>Ime predmeta</th>
+                        <th>Opis</th>
+                        <th>Koda za vpis</th>
+                        <th>Akcije</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -289,13 +207,20 @@ $student_result = $conn->query($student_query);
                     $subjects_result = $conn->query($subjects_query);
                     while ($subject = $subjects_result->fetch_assoc()):
                     ?>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding: 12px;"><?= htmlspecialchars($subject['ime']) ?></td>
-                        <td style="padding: 12px;"><?= htmlspecialchars($subject['opis']) ?></td>
-                        <td style="padding: 12px;">
-                            <span style="font-family: monospace; background: #e9ecef; padding: 4px 8px; border-radius: 4px;">
+                    <tr>
+                        <td><?= htmlspecialchars($subject['ime']) ?></td>
+                        <td><?= htmlspecialchars($subject['opis']) ?></td>
+                        <td>
+                            <span class="code-display">
                                 <?= htmlspecialchars($subject['kljuc_za_vpis']) ?>
                             </span>
+                        </td>
+                        <td>
+                            <form method="POST" style="display: inline;" 
+                                  onsubmit="return confirm('Ali ste prepričani, da želite izbrisati ta predmet? To bo odstranilo vse povezave med učitelji in učenci s tem predmetom.');">
+                                <input type="hidden" name="subject_id" value="<?= $subject['id'] ?>">
+                                <button type="submit" name="delete_subject" class="delete-btn">Izbriši</button>
+                            </form>
                         </td>
                     </tr>
                     <?php endwhile; ?>
@@ -304,34 +229,34 @@ $student_result = $conn->query($student_query);
         </div>
 
         <!-- Add New Subject Form -->
-        <div class="add-user-section" style="max-width: 600px; margin: 30px auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-            <h2 style="margin-top: 0; color: #333; margin-bottom: 20px;">Dodaj nov predmet</h2>
+        <div class="add-user-section">
+            <h2 class="section-header">Dodaj nov predmet</h2>
             <form method="POST">
                 <div class="form-group">
                     <label>Ime predmeta:</label>
-                    <input type="text" name="subject_name" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    <input type="text" name="subject_name" required>
                 </div>
                 <div class="form-group">
                     <label>Opis predmeta:</label>
-                    <textarea name="subject_description" rows="3" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+                    <textarea name="subject_description" rows="3" class="w-100"></textarea>
                 </div>
                 <div class="form-group">
                     <label>Koda za vpis (8 znakov):</label>
-                    <input type="text" name="enrollment_code" required maxlength="8" pattern=".{8,8}" title="Koda mora biti dolga točno 8 znakov" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace;">
+                    <input type="text" name="enrollment_code" required maxlength="8" pattern=".{8,8}" title="Koda mora biti dolga točno 8 znakov" class="code-display w-100">
                 </div>
-                <button type="submit" name="add_subject" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
+                <button type="submit" name="add_subject" class="submit-button">
                     Dodaj predmet
                 </button>
             </form>
         </div>
 
         <!-- Add New User Form -->
-        <div class="add-user-section" style="max-width: 600px; margin: 30px auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-            <h2 style="margin-top: 0; color: #333; margin-bottom: 20px;">Dodaj novega uporabnika</h2>
+        <div class="add-user-section">
+            <h2 class="section-header">Dodaj novega uporabnika</h2>
             <form method="POST">
                 <div class="form-group">
                     <label>Ime:</label>
-                    <input type="text" name="ime" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    <input type="text" name="ime" required>
                 </div>
                 <div class="form-group">
                     <label>Priimek:</label>
@@ -536,7 +461,7 @@ $student_result = $conn->query($student_query);
             </table>
 
             <h3>Učenci</h3>
-            <div style="max-height: 400px; overflow-y: auto; border: 1px solid #eee; border-radius: 8px;">
+            <div class="scrollable-content">
                 <table class="users-table" style="margin-top: 0;">
                     <thead style="position: sticky; top: 0; background: white; z-index: 1;">
                         <tr>
@@ -569,7 +494,7 @@ $student_result = $conn->query($student_query);
             </div>
         </div>
 
-        <button onclick="window.location.href='logout.php'" style="margin: 20px auto; display: block;">Odjava</button>
+        <button onclick="window.location.href='logout.php'" class="logout-button">Odjava</button>
     </div>
 
     <script>
@@ -586,25 +511,6 @@ $student_result = $conn->query($student_query);
         }
     </script>
 
-    <style>
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #666;
-        }
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        button[name="add_user"]:hover {
-            background: #218838;
-        }
-    </style>
+
 </body>
 </html>

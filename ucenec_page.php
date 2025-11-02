@@ -47,66 +47,10 @@ if (isset($_POST['enroll_subject'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Učenec: Moji predmeti</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .enrollment-form {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .enrollment-form input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .enrollment-form button {
-            background: #7494ec;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .enrollment-form button:hover {
-            background: #6884d3;
-        }
-        .subjects-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .subjects-table th,
-        .subjects-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        .subjects-table th {
-            background: #f8f9fa;
-            font-weight: bold;
-        }
-        .button {
-            display: inline-block;
-            padding: 6px 12px;
-            margin: 0 4px;
-            background: #7494ec;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .button:hover {
-            background: #6884d3;
-        }
-    </style>
+
 </head>
 
-<body style="background: #f5f7fb;">
+<body>
     <div class="box">
         <h1>Pozdravljeni, <span><?= htmlspecialchars($_SESSION['name']); ?></span></h1>
         
@@ -126,13 +70,13 @@ if (isset($_POST['enroll_subject'])) {
                 </div>
                 <button type="submit" name="enroll_subject">Vpiši se v predmet</button>
             </form>
-            <p style="margin-top: 10px; color: #666; font-size: 14px;">
+            <p class="info-text">
                 Vnesite kodo predmeta, ki vam jo je posredoval učitelj.
             </p>
         </div>
 
         <?php if ($predmeti_result && $predmeti_result->num_rows > 0): ?>
-            <div style="max-width: 800px; margin: 20px auto;">
+            <div class="content-width-limited">
                 <h3>Moji predmeti</h3>
                 <table class="subjects-table">
                     <thead>
@@ -160,47 +104,9 @@ if (isset($_POST['enroll_subject'])) {
             <p class="info-message">Trenutno niste vpisani v noben predmet. Uporabite kodo za vpis v predmet zgoraj.</p>
         <?php endif; ?>
 
-        <button onclick="window.location.href='logout.php'" style="margin: 20px auto;">Odjava</button>
+        <button onclick="window.location.href='logout.php'" class="logout-button">Odjava</button>
     </div>
 
-    <style>
-        .subjects-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .subjects-table th {
-            background: #7494ec;
-            color: white;
-            padding: 12px;
-            text-align: left;
-        }
-        .subjects-table td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-        .button {
-            display: inline-block;
-            padding: 8px 16px;
-            background: #7494ec;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-right: 8px;
-        }
-        .button:hover {
-            background: #6884d3;
-        }
-        .info-message {
-            background: #e2e3e5;
-            color: #383d41;
-            padding: 15px;
-            border-radius: 4px;
-            margin: 20px 0;
-            text-align: center;
-        }
-    </style>
+
 </body>
 </html>

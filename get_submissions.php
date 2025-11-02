@@ -2,8 +2,26 @@
 session_start();
 require_once 'config.php';
 
+// Check if user is logged in and is a teacher
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'ucitelj') {
+    die("Dostop zavrnjen");
+}
+
 $id_naloga = isset($_GET['id_naloga']) ? (int)$_GET['id_naloga'] : 0;
 $id_ucitelj = $_SESSION['user_id'];
+
+// Check if this assignment belongs to one of teacher's subjects
+$check_query = "
+    SELECT 1 
+    FROM naloge n
+    JOIN predmeti p ON n.id_predmet = p.id
+    JOIN ucitelji_predmeti up ON p.id = up.id_predmet
+    WHERE n.id = $id_naloga AND up.id_ucitelj = $id_ucitelj
+";
+$check_result = $conn->query($check_query);
+if (!$check_result || $check_result->num_rows === 0) {
+    die("Naloga ne obstaja ali nimate dostopa do nje.");
+}
 
 // Get submissions with student info
 $oddaje_query = "
@@ -48,11 +66,11 @@ $naloga = $naloga_result->fetch_assoc();
                         </a>
                     </td>
                     <td>
-                        <form method="POST" class="grade-form" data-submission-id="<?= $submission['id'] ?>">
-                            <input type="hidden" name="id_oddaja" value="<?= $submission['id'] ?>">
-                            <input type="number" name="ocena" value="<?= $submission['ocena'] ?>" 
+                        <form method="POST" class="grade-form" data-submission-id="<?= $oddaja['id'] ?>">
+                            <input type="hidden" name="id_oddaja" value="<?= $oddaja['id'] ?>">
+                            <input type="number" name="ocena" value="<?= $oddaja['ocena'] ?? '' ?>" 
                                    min="1" max="5" class="grade-input" required>
-                            <textarea name="komentar" placeholder="Komentar"><?= htmlspecialchars($submission['komentar_ucitelja']) ?></textarea>
+                            <textarea name="komentar" placeholder="Komentar"><?= htmlspecialchars($oddaja['komentar_ucitelja'] ?? '') ?></textarea>
                             <button type="submit" name="grade_submission">Shrani</button>
                         </form>
                     </td>
