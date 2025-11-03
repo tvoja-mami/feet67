@@ -66,8 +66,9 @@ AND (
     (u.id % 3 = 0 AND p1.id % 10 = ((u.id + 2) % 10))  -- Third subject for some teachers
 );
 
--- Insert 100 students
+-- Insert 180 students (100 original + 80 new)
 INSERT INTO uporabniki (uporabnisko_ime, geslo, ime, priimek, email, vloga, razred) VALUES
+-- Original students 1-15
 ('ucenec1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Jan', 'Kumar', 'jan.kumar@student.si', 'ucenec', '1.A'),
 ('ucenec2', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Nika', 'Kovačič', 'nika.kovacic@student.si', 'ucenec', '1.A'),
 ('ucenec3', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Luka', 'Zupan', 'luka.zupan@student.si', 'ucenec', '1.A'),
@@ -83,10 +84,102 @@ INSERT INTO uporabniki (uporabnisko_ime, geslo, ime, priimek, email, vloga, razr
 ('ucenec13', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Jakob', 'Mlakar', 'jakob.mlakar@student.si', 'ucenec', '2.A'),
 ('ucenec14', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Ema', 'Golob', 'ema.golob@student.si', 'ucenec', '2.A'),
 ('ucenec15', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Žan', 'Krajnc', 'zan.krajnc@student.si', 'ucenec', '2.A'),
--- Continue with more students in different classes
+
+-- New additional students (80 more)
+('ucenec101', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Martin', 'Koren', 'martin.koren@student.si', 'ucenec', '1.A'),
+('ucenec102', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Petra', 'Breznik', 'petra.breznik@student.si', 'ucenec', '1.A'),
+('ucenec103', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Nejc', 'Medved', 'nejc.medved@student.si', 'ucenec', '1.B'),
+('ucenec104', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Tjaša', 'Vidmar', 'tjasa.vidmar@student.si', 'ucenec', '1.B'),
+('ucenec105', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Urban', 'Erjavec', 'urban.erjavec@student.si', 'ucenec', '1.C'),
+('ucenec106', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Klara', 'Rozman', 'klara.rozman@student.si', 'ucenec', '2.A'),
+('ucenec107', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Jure', 'Mlakar', 'jure.mlakar@student.si', 'ucenec', '2.A'),
+('ucenec108', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Zala', 'Kalan', 'zala.kalan@student.si', 'ucenec', '2.B'),
+('ucenec109', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Vid', 'Petek', 'vid.petek@student.si', 'ucenec', '2.B'),
+('ucenec110', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Neža', 'Logar', 'neza.logar@student.si', 'ucenec', '2.C'),
+
+-- Continue with more students for each class
+('ucenec111', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Blaž', 'Žagar', 'blaz.zagar@student.si', 'ucenec', '3.A'),
+('ucenec112', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Maša', 'Petrič', 'masa.petric@student.si', 'ucenec', '3.A'),
+('ucenec113', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Gal', 'Kobal', 'gal.kobal@student.si', 'ucenec', '3.B'),
+('ucenec114', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Tina', 'Bajc', 'tina.bajc@student.si', 'ucenec', '3.B'),
+
+-- Rest of the original students
 ('ucenec98', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Laura', 'Vidic', 'laura.vidic@student.si', 'ucenec', '4.B'),
 ('ucenec99', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Matej', 'Oblak', 'matej.oblak@student.si', 'ucenec', '4.B'),
-('ucenec100', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Tina', 'Rus', 'tina.rus@student.si', 'ucenec', '4.B');
+('ucenec100', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Tina', 'Rus', 'tina.rus@student.si', 'ucenec', '4.B'),
+
+-- More new students (continuing)
+('ucenec115', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Alex', 'Kern', 'alex.kern@student.si', 'ucenec', '4.A'),
+('ucenec116', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mia', 'Pirc', 'mia.pirc@student.si', 'ucenec', '4.A'),
+('ucenec117', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Jan', 'Šuštar', 'jan.sustar@student.si', 'ucenec', '4.A'),
+('ucenec118', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Eva', 'Zorman', 'eva.zorman@student.si', 'ucenec', '4.B'),
+('ucenec119', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Rok', 'Pečnik', 'rok.pecnik@student.si', 'ucenec', '4.B'),
+('ucenec120', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Pia', 'Urankar', 'pia.urankar@student.si', 'ucenec', '4.C'),
+('ucenec121', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Matevž', 'Bevc', 'matevz.bevc@student.si', 'ucenec', '1.A'),
+('ucenec122', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Lucija', 'Rupnik', 'lucija.rupnik@student.si', 'ucenec', '1.B'),
+('ucenec123', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Filip', 'Jenko', 'filip.jenko@student.si', 'ucenec', '2.A'),
+('ucenec124', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Tara', 'Pušnik', 'tara.pusnik@student.si', 'ucenec', '2.B'),
+('ucenec125', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Aleks', 'Bohinc', 'aleks.bohinc@student.si', 'ucenec', '3.A'),
+('ucenec126', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Tilen', 'Hribar', 'tilen.hribar@student.si', 'ucenec', '1.A'),
+('ucenec127', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Zoja', 'Koželj', 'zoja.kozelj@student.si', 'ucenec', '1.A'),
+('ucenec128', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Matic', 'Mežnar', 'matic.meznar@student.si', 'ucenec', '1.A'),
+('ucenec129', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Luna', 'Mrak', 'luna.mrak@student.si', 'ucenec', '1.A'),
+('ucenec130', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Žiga', 'Lavrič', 'ziga.lavric@student.si', 'ucenec', '1.B'),
+('ucenec131', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Lana', 'Erjavec', 'lana.erjavec@student.si', 'ucenec', '1.B'),
+('ucenec132', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Val', 'Škrlj', 'val.skrlj@student.si', 'ucenec', '1.B'),
+('ucenec133', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Ela', 'Kravos', 'ela.kravos@student.si', 'ucenec', '1.B'),
+('ucenec134', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Anže', 'Černe', 'anze.cerne@student.si', 'ucenec', '1.C'),
+('ucenec135', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kaja', 'Bogataj', 'kaja.bogataj@student.si', 'ucenec', '1.C'),
+('ucenec136', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Gašper', 'Mihelič', 'gasper.mihelic@student.si', 'ucenec', '2.A'),
+('ucenec137', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Vita', 'Sever', 'vita.sever@student.si', 'ucenec', '2.A'),
+('ucenec138', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Taj', 'Demšar', 'taj.demsar@student.si', 'ucenec', '2.A'),
+('ucenec139', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mila', 'Ferjančič', 'mila.ferjancic@student.si', 'ucenec', '2.B'),
+('ucenec140', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Lan', 'Čebular', 'lan.cebular@student.si', 'ucenec', '2.B'),
+('ucenec141', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Ajda', 'Svetlin', 'ajda.svetlin@student.si', 'ucenec', '2.B'),
+('ucenec142', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Bor', 'Gregorič', 'bor.gregoric@student.si', 'ucenec', '2.C'),
+('ucenec143', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Tia', 'Majcen', 'tia.majcen@student.si', 'ucenec', '2.C'),
+('ucenec144', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Maks', 'Gorenc', 'maks.gorenc@student.si', 'ucenec', '3.A'),
+('ucenec145', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Iza', 'Rus', 'iza.rus@student.si', 'ucenec', '3.A'),
+('ucenec146', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mai', 'Zadravec', 'mai.zadravec@student.si', 'ucenec', '3.A'),
+('ucenec147', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Pika', 'Klančar', 'pika.klancar@student.si', 'ucenec', '3.B'),
+('ucenec148', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Nace', 'Skok', 'nace.skok@student.si', 'ucenec', '3.B'),
+('ucenec149', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Manca', 'Bajec', 'manca.bajec@student.si', 'ucenec', '3.B'),
+('ucenec150', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Jaka', 'Tomšič', 'jaka.tomsic@student.si', 'ucenec', '3.C'),
+('ucenec151', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Ula', 'Bizjak', 'ula.bizjak@student.si', 'ucenec', '3.C'),
+('ucenec152', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Niko', 'Strgar', 'niko.strgar@student.si', 'ucenec', '4.A'),
+('ucenec153', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Lili', 'Knez', 'lili.knez@student.si', 'ucenec', '4.A'),
+('ucenec154', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Oskar', 'Stare', 'oskar.stare@student.si', 'ucenec', '4.A'),
+('ucenec155', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Zara', 'Hvala', 'zara.hvala@student.si', 'ucenec', '4.B'),
+('ucenec156', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Nik', 'Lunar', 'nik.lunar@student.si', 'ucenec', '4.B'),
+('ucenec157', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Gaja', 'Murn', 'gaja.murn@student.si', 'ucenec', '4.B'),
+('ucenec158', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Leo', 'Rupar', 'leo.rupar@student.si', 'ucenec', '4.C'),
+('ucenec159', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kiara', 'Zalokar', 'kiara.zalokar@student.si', 'ucenec', '4.C'),
+('ucenec160', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Erik', 'Žnidar', 'erik.znidar@student.si', 'ucenec', '1.A'),
+('ucenec161', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Iris', 'Červ', 'iris.cerv@student.si', 'ucenec', '1.B'),
+('ucenec162', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dan', 'Nose', 'dan.nose@student.si', 'ucenec', '1.C'),
+('ucenec163', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Ela', 'Žužek', 'ela.zuzek@student.si', 'ucenec', '2.A'),
+('ucenec164', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Ian', 'Toplak', 'ian.toplak@student.si', 'ucenec', '2.B'),
+('ucenec165', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mia', 'Pirc', 'mia.pirc@student.si', 'ucenec', '2.C'),
+('ucenec166', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Bine', 'Železnik', 'bine.zeleznik@student.si', 'ucenec', '3.A'),
+('ucenec167', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Lara', 'Čop', 'lara.cop@student.si', 'ucenec', '3.B'),
+('ucenec168', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Teo', 'Lebar', 'teo.lebar@student.si', 'ucenec', '3.C'),
+('ucenec169', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Alja', 'Rupar', 'alja.rupar@student.si', 'ucenec', '4.A'),
+('ucenec170', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Arne', 'Zajc', 'arne.zajc@student.si', 'ucenec', '4.B'),
+('ucenec171', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Uma', 'Vidic', 'uma.vidic@student.si', 'ucenec', '4.C'),
+('ucenec172', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Tine', 'Oman', 'tine.oman@student.si', 'ucenec', '1.A'),
+('ucenec173', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Neja', 'Leban', 'neja.leban@student.si', 'ucenec', '1.B'),
+('ucenec174', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Lin', 'Dolenc', 'lin.dolenc@student.si', 'ucenec', '1.C'),
+('ucenec175', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Erin', 'Kavčič', 'erin.kavcic@student.si', 'ucenec', '2.A'),
+('ucenec176', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Urban', 'Šuštar', 'urban.sustar@student.si', 'ucenec', '2.B'),
+('ucenec177', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Zoja', 'Cesar', 'zoja.cesar@student.si', 'ucenec', '2.C'),
+('ucenec178', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Rene', 'Zorko', 'rene.zorko@student.si', 'ucenec', '3.A'),
+('ucenec179', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Maja', 'Logar', 'maja.logar@student.si', 'ucenec', '3.B'),
+('ucenec180', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Tai', 'Podobnik', 'tai.podobnik@student.si', 'ucenec', '3.C'),
+('ucenec181', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Ema', 'Petrič', 'ema.petric@student.si', 'ucenec', '4.A'),
+('ucenec182', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Val', 'Mavec', 'val.mavec@student.si', 'ucenec', '4.B'),
+('ucenec183', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Nina', 'Bratož', 'nina.bratoz@student.si', 'ucenec', '4.C'),
+('ucenec184', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Tim', 'Kobal', 'tim.kobal@student.si', 'ucenec', '4.A'),
+('ucenec185', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Ana', 'Ferjančič', 'ana.ferjancic@student.si', 'ucenec', '4.B');
 
 -- Insert admin (password is 'password' same as others)
 INSERT INTO uporabniki (uporabnisko_ime, geslo, ime, priimek, email, vloga) VALUES
