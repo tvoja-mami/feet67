@@ -107,7 +107,7 @@ $naloge_result = $conn->query($naloge_query);
         }
         .error-message {
             background: #f8d7da;
-            color: #721c24;
+            color: #8a1d28ff;
             padding: 10px;
             border-radius: 4px;
             margin-bottom: 15px;

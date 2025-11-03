@@ -8,8 +8,8 @@
     --text-light: #666666;
     --white: #ffffff;
     --background: #c4cfff;
-    --error: #e2260d;
-    --error-text: #d32f2f;
+    --error: #ffacac;
+    --error-text: #af4c4c;
     --success: #e8f5e9;
     --success-text: #2e7d32;
     --info: #e3f2fd;
@@ -166,7 +166,7 @@ button:hover {
     background: var(--error);
     border-radius: 6px;
     font-size: 16px;
-    color: var(--error-text);
+    color: var(--error-text) !important;
     text-align: center;
     margin-bottom: 20px;
 }
