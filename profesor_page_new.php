@@ -409,8 +409,8 @@ $naloge_result = $conn->query($naloge_query);
                                   FROM naloge n
                                   JOIN predmeti p ON n.id_predmet = p.id
                                   JOIN ucitelji_predmeti up ON p.id = up.id_predmet
-                                  WHERE up.id_ucitelj = $id_ucitelj AND n.rok >= NOW()
-                                  ORDER BY n.rok ASC";
+                                  WHERE up.id_ucitelj = $id_ucitelj AND n.rok_oddaje >= NOW()
+                                  ORDER BY n.rok_oddaje ASC";
             $active_naloge_result = $conn->query($active_naloge_query);
             
             if ($active_naloge_result && $active_naloge_result->num_rows > 0):
@@ -428,7 +428,7 @@ $naloge_result = $conn->query($naloge_query);
                 <tr>
                     <td><?= htmlspecialchars($naloga['ime_predmeta']) ?></td>
                     <td><?= htmlspecialchars($naloga['naslov']) ?></td>
-                    <td><?= date('d.m.Y H:i', strtotime($naloga['rok'])) ?></td>
+                    <td><?= date('d.m.Y H:i', strtotime($naloga['rok_oddaje'])) ?></td>
                     <td><?= $naloga['stevilo_oddaj'] ?></td>
                     <td>
                         <a href="naloge.php?id=<?= $naloga['id'] ?>" class="button">Pregled</a>
