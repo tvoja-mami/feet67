@@ -46,20 +46,17 @@ if ($_SESSION['role'] === 'ucitelj' && isset($_POST['upload'])) {
         $naslov = $conn->real_escape_string($_POST['naslov']);
         
         // Create uploads directory if it doesn't exist
-        $upload_dir = "uploads/gradiva/$id_predmet";
+        $upload_dir = "uploads/gradiva/$id_predmet/";
         if (!file_exists($upload_dir)) {
             mkdir($upload_dir, 0777, true);
         }
         
         $filename = uniqid() . '_' . basename($file['name']);
-        // Pot za shranjevanje v datotečni sistem
-        $file_system_path = $upload_dir . '/' . $filename;
-        // Pot za shranjevanje v bazo in prikaz v brskalniku
-        $web_path = '/' . $upload_dir . '/' . $filename;
+        $target_path = $upload_dir . $filename;
         
-        if (move_uploaded_file($file['tmp_name'], $file_system_path)) {
+        if (move_uploaded_file($file['tmp_name'], $target_path)) {
             $sql = "INSERT INTO gradiva (id_predmet, naslov, pot_datoteke, izvirno_ime_datoteke) 
-                    VALUES (" . $id_predmet . ", '" . $naslov . "', '" . $web_path . "', '" . $conn->real_escape_string($file['name']) . "')";
+                    VALUES ($id_predmet, '$naslov', '$target_path', '" . $conn->real_escape_string($file['name']) . "')";
             if ($conn->query($sql)) {
                 $success_message = "Gradivo uspešno naloženo!";
             } else {
@@ -135,7 +132,7 @@ $gradiva_result = $conn->query($gradiva_query);
                             <tr>
                                 <td><?= htmlspecialchars($gradivo['naslov']) ?></td>
                                 <td>
-                                    <a href="./uploads/gradiva/<?= htmlspecialchars($gradivo['pot_datoteke']) ?>" 
+                                    <a href="/uploads/gradiva/<?= htmlspecialchars($gradivo['pot_datoteke']) ?>" 
                                        download="<?= htmlspecialchars($gradivo['izvirno_ime_datoteke']) ?>"
                                        class="button">
                                         Prenesi
