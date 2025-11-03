@@ -132,7 +132,7 @@ $gradiva_result = $conn->query($gradiva_query);
                             <tr>
                                 <td><?= htmlspecialchars($gradivo['naslov']) ?></td>
                                 <td>
-                                    <a href="<?= htmlspecialchars($gradivo['pot_datoteke']) ?>" 
+                                    <a href="/<?= htmlspecialchars($gradivo['pot_datoteke']) ?>" 
                                        download="<?= htmlspecialchars($gradivo['izvirno_ime_datoteke']) ?>"
                                        class="button">
                                         Prenesi
