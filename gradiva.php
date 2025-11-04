@@ -153,42 +153,5 @@ $gradiva_result = $conn->query($gradiva_query);
             Nazaj na glavno stran
         </button>
     </div>
-
-    <style>
-        .materials-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .materials-table th {
-            background: #7494ec;
-            color: white;
-            padding: 12px;
-            text-align: left;
-        }
-        .materials-table td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-        .button {
-            display: inline-block;
-            padding: 8px 16px;
-            background: #7494ec;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-        .button:hover {
-            background: #6884d3;
-        }
-        input[type="file"] {
-            width: 100%;
-            padding: 8px;
-            background: #eee;
-            border-radius: 4px;
-        }
-    </style>
 </body>
 </html>
