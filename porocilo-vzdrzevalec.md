@@ -6,7 +6,7 @@
 - **RAM**: 4 GB
 - **HDD**: 25 GB
 - **Omrežje**: Bridged Adapter
-- **Prenos ISO**: `ubuntu-22.04.3-live-server-amd64.iso`
+- **Prenos ISO**: `najnovejsi ubunto iso, v mojem primeru: ubuntu-22.04.3-live-server-amd64.iso`
 
 ### Osnovna nastavitev Ubuntu Server
 ```bash
