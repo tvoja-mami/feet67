@@ -47,16 +47,15 @@ ngrok http 80
 Github konfiguracija
 bash
 
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
-git clone https://github.com/your-repo/project.git
+cd v root datoteko spletne aplikacije
+git config --global user.name "tvoja-mami"
+git config --global user.email "janjager843@gmail.com"
+git clone https://github.com/tvoja-mami/feet67.git
 
-Preverjanje delovanja
+Za lokalen dostop:
+ip a //v strežniku da dobisš lokalni ip
+10.1.150.21
 
-    Apache: http://server-ip
-
-    PHP: php -v
-
-    MySQL: sudo mysql -u root -p
+Za javni dostop je ngrok ip ki ga dobis in se spreminja
 
 Strežnik je dostopen preko lokalnega omrežja in preko ngrok javnega naslova.
