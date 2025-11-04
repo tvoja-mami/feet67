@@ -54,7 +54,7 @@ git config --global user.email "janjager843@gmail.com"
 git clone https://github.com/tvoja-mami/feet67.git
 ```
 Za lokalen dostop:
-ip a //v strežniku da dobisš lokalni ip
+ip a v strežniku da dobisš lokalni ip
 10.1.150.21
 
 Za javni dostop je ngrok ip ki ga dobis in se spreminja
