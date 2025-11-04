@@ -48,7 +48,7 @@ ngrok http 80
 Github konfiguracija
 ```bash
 
-cd v root datoteko spletne aplikacije
+//cd v root datoteko spletne aplikacije
 git config --global user.name "tvoja-mami"
 git config --global user.email "janjager843@gmail.com"
 git clone https://github.com/tvoja-mami/feet67.git
